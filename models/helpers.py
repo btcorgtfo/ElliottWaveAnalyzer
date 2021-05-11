@@ -1,6 +1,7 @@
 from models.models import WaveOptions
 import pandas as pd
 from numba import vectorize, jit
+from abc import ABC, abstractmethod
 import time
 
 def timeit(func):
@@ -14,36 +15,22 @@ def timeit(func):
     return wrapper
 
 
-class WaveOptionsGenerator:
+class WaveOptionsGenerator(ABC):
     def __init__(self, up_to: int):
         self.__up_to = up_to
         self.options = self.populate_set()
 
     @property
+    def up_to(self):
+        return self.__up_to
+
+    @property
     def number(self):
         return len(self.options)
 
+    @abstractmethod
     def populate_set(self):
-        checked = set()
-
-        for i in range(0, self.__up_to):
-            for j in range(0, self.__up_to):
-                for k in range(0, self.__up_to):
-                    for l in range(0, self.__up_to):
-                        for m in range(0, self.__up_to):
-
-                            if i == 0:
-                                j = k = l = m = 0
-                            if j == 0:
-                                k = l = m = 0
-                            if k == 0:
-                                l = m = 0
-                            if l == 0:
-                                m = 0
-
-                            wave_options = WaveOptions(i, j, k, l, m)
-                            checked.add(wave_options)
-        return checked
+        pass
 
     def __iter__(self):
         return self
@@ -54,12 +41,48 @@ class WaveOptionsGenerator:
         except KeyError:
             raise StopIteration
 
+
+class WaveOptionsGenerator5(WaveOptionsGenerator):
+    def populate_set(self):
+        checked = set()
+
+        for i in range(0, self.up_to):
+            for j in range(0, self.up_to):
+                for k in range(0, self.up_to):
+                    for l in range(0, self.up_to):
+                        for m in range(0, self.up_to):
+
+                            if i == 0:
+                                j = k = l = m = 0
+                            if j == 0:
+                                k = l = m = 0
+                            if k == 0:
+                                l = m = 0
+                            if l == 0:
+                                m = 0
+                            wave_options = WaveOptions(i, j, k, l, m)
+                            checked.add(wave_options)
+        return checked
+
+class WaveOptionsGenerator2(WaveOptionsGenerator):
+    def populate_set(self):
+        checked = set()
+
+        for i in range(0, self.up_to):
+            for j in range(0, self.up_to):
+                if i == 0:
+                    j = 0
+
+                wave_options = WaveOptions(i, j, None, None, None)
+                checked.add(wave_options)
+        return checked
+
 def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Converts a yahoo finance OHLC DataFrame to column name(s) used in this project
 
     old_names = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    new_names = ['Date_Time', 'Open', 'High', 'Low', 'Close']
+    new_names = ['Date', 'Open', 'High', 'Low', 'Close']
 
     :param df:
     :return:
