@@ -1,17 +1,20 @@
 from __future__ import annotations
-from models.models import WavePattern, WaveAnalyzer, Impulse, TDWave
+from models.waves import WavePattern
+from models.waverules import Impulse, TDWave
+from models.waveanalyzer import WaveAnalyzer
 from models.helpers import WaveOptionsGenerator2, WaveOptionsGenerator5
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import random
 import time
 
-idx_start = 0
 df = pd.read_csv(r'data\btc-eur_h.csv')
 df = pd.read_csv(r'data\btc-usd_1d.csv')
 df = pd.read_csv(r'data\eth-usd_60m.csv')
 
 df = df
+idx_start = np.argmin(np.array(list(df['Low'])))
 
 wa = WaveAnalyzer(df=df, verbose=True)
 
@@ -31,33 +34,32 @@ impulse = Impulse('impulse')
 tdwave = TDWave('tdwave')
 
 
-# waves = wa.find_impulsive_wave(idx_start=idx_start, wave_config=[0,0,0,0,0])
-# wave_pattern = WavePattern(waves, verbose=True)
-# wave_pattern.check_rule(impulse)
-#
-# data = go.Ohlc(x=df['Date'],
-#                            open=df['Open'],
-#                            high=df['High'],
-#                            low=df['Low'],
-#                            close=df['Close'])
-#
-# monowaves = go.Scatter(x=wave_pattern.dates,
-#                        y=wave_pattern.values,
-#                        text=wave_pattern.labels,
-#                        mode='lines+markers+text',
-#                        textposition='middle right',
-#                        textfont=dict(size=15, color='#2c3035'),
-#                        line=dict(
-#                            color=('rgb(111, 126, 130)'),
-#                            width=3),
-#                        )
-#
-# fig = go.Figure(data=[data])#, monowaves])
-# fig.update(layout_xaxis_rangeslider_visible=False)
-#
-# fig.show()
-#
-# exit()
+class WaveCount:
+    def __init__(self):
+        self.wavecycles = list
+
+    def waves_by_degree(self, degree: int):
+        pass
+
+    def add(self, wavecycle: WaveCycle):
+        self.wavecycles.append(wavecycle)
+
+class WaveCycle:
+    """
+    One Cycle of 12345 -> ABC
+    """
+    def __init__(self, wavepattern_up: WavePattern, wavepattern_down: WavePattern):
+        self.wp_up = wavepattern_up
+        self.wp_down = wavepattern_down
+
+    @property
+    def low(self):
+        pass
+
+    @property
+    def high(self):
+        pass
+
 print(f"will run {wave_options.number} combinations.")
 random_starts = set()
 while True:#not valid_pattern:

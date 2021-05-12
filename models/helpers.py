@@ -1,6 +1,5 @@
 from models.models import WaveOptions
 import pandas as pd
-from numba import vectorize, jit
 from abc import ABC, abstractmethod
 import time
 
@@ -64,6 +63,7 @@ class WaveOptionsGenerator5(WaveOptionsGenerator):
                             checked.add(wave_options)
         return checked
 
+
 class WaveOptionsGenerator2(WaveOptionsGenerator):
     def populate_set(self):
         checked = set()
@@ -76,6 +76,7 @@ class WaveOptionsGenerator2(WaveOptionsGenerator):
                 wave_options = WaveOptions(i, j, None, None, None)
                 checked.add(wave_options)
         return checked
+
 
 def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
     """
