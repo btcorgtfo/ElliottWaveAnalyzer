@@ -1,7 +1,8 @@
-from models.models import WaveOptions
+from models.WavePattern import WavePattern
 import pandas as pd
-from abc import ABC, abstractmethod
 import time
+import plotly.graph_objects as go
+
 
 def timeit(func):
     def wrapper(*arg, **kw):
@@ -14,68 +15,29 @@ def timeit(func):
     return wrapper
 
 
-class WaveOptionsGenerator(ABC):
-    def __init__(self, up_to: int):
-        self.__up_to = up_to
-        self.options = self.populate_set()
+def plot_cycle(df, wave_cycle, title: str = ''):
 
-    @property
-    def up_to(self):
-        return self.__up_to
+    data = go.Ohlc(x=df['Date'],
+                   open=df['Open'],
+                   high=df['High'],
+                   low=df['Low'],
+                   close=df['Close'])
 
-    @property
-    def number(self):
-        return len(self.options)
+    monowaves = go.Scatter(x=wave_cycle.dates,
+                           y=wave_cycle.values,
+                           text=wave_cycle.labels,
+                           mode='lines+markers+text',
+                           textposition='middle right',
+                           textfont=dict(size=15, color='#2c3035'),
+                           line=dict(
+                               color=('rgb(111, 126, 130)'),
+                               width=3),
+                           )
+    layout = dict(title=title)
+    fig = go.Figure(data=[data, monowaves], layout=layout)
+    fig.update(layout_xaxis_rangeslider_visible=False)
 
-    @abstractmethod
-    def populate_set(self):
-        pass
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        try:
-            return self.options.pop()
-        except KeyError:
-            raise StopIteration
-
-
-class WaveOptionsGenerator5(WaveOptionsGenerator):
-    def populate_set(self):
-        checked = set()
-
-        for i in range(0, self.up_to):
-            for j in range(0, self.up_to):
-                for k in range(0, self.up_to):
-                    for l in range(0, self.up_to):
-                        for m in range(0, self.up_to):
-
-                            if i == 0:
-                                j = k = l = m = 0
-                            if j == 0:
-                                k = l = m = 0
-                            if k == 0:
-                                l = m = 0
-                            if l == 0:
-                                m = 0
-                            wave_options = WaveOptions(i, j, k, l, m)
-                            checked.add(wave_options)
-        return checked
-
-
-class WaveOptionsGenerator2(WaveOptionsGenerator):
-    def populate_set(self):
-        checked = set()
-
-        for i in range(0, self.up_to):
-            for j in range(0, self.up_to):
-                if i == 0:
-                    j = 0
-
-                wave_options = WaveOptions(i, j, None, None, None)
-                checked.add(wave_options)
-        return checked
+    fig.show()
 
 
 def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
@@ -99,3 +61,49 @@ def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
     df_output['Close'] = df['Close'].to_list()
 
     return df_output
+
+def plot_pattern(df: pd.DataFrame, wave_pattern: WavePattern, title: str = ''):
+    data = go.Ohlc(x=df['Date'],
+                   open=df['Open'],
+                   high=df['High'],
+                   low=df['Low'],
+                   close=df['Close'])
+
+    monowaves = go.Scatter(x=wave_pattern.dates,
+                           y=wave_pattern.values,
+                           text=wave_pattern.labels,
+                           mode='lines+markers+text',
+                           textposition='middle right',
+                           textfont=dict(size=15, color='#2c3035'),
+                           line=dict(
+                               color=('rgb(111, 126, 130)'),
+                               width=3),
+                           )
+    layout = dict(title=title)
+    fig = go.Figure(data=[data, monowaves], layout=layout)
+    fig.update(layout_xaxis_rangeslider_visible=False)
+
+    fig.show()
+
+def plot_monowave(df, monowave, title: str = ''):
+    data = go.Ohlc(x=df['Date'],
+                   open=df['Open'],
+                   high=df['High'],
+                   low=df['Low'],
+                   close=df['Close'])
+
+    monowaves = go.Scatter(x=monowave.dates,
+                           y=monowave.points,
+                           text=monowave.labels,
+                           mode='lines+markers+text',
+                           textposition='middle right',
+                           textfont=dict(size=15, color='#2c3035'),
+                           line=dict(
+                               color=('rgb(111, 126, 130)'),
+                               width=3),
+                           )
+    layout = dict(title=title)
+    fig = go.Figure(data=[data, monowaves], layout=layout)
+    fig.update(layout_xaxis_rangeslider_visible=False)
+
+    fig.show()

@@ -61,8 +61,8 @@ def next_hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0, prev_hi
 @njit
 def next_lo(lows_arr: np.array, highs_arr: np.array, idx_start: int, prev_low: float):
     low = highs_arr[idx_start]
-
     prev_low_reached = False
+
     for idx in range(idx_start + 1, len(lows_arr)):
 
         act_low = lows_arr[idx]
