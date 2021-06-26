@@ -25,15 +25,19 @@ The MonoWave ends, once a candle breaks this "micro trend".
 There is `MonoWaveUp` and the `MonoWaveDown`, denoting the direction of the wave.
 
 ### Parameters
-The essential idea is, that with the parameter 'skip=', smaller corrections can be skipped. In case of an upwards trend, 
+The essential idea is, that with the parameter `skip=`, smaller corrections can be skipped. In case of an upwards trend, 
 e.g. `skip=2` will skip the next 2 maxima.
 
 ![](doc/img/monowave_skip.png)
 
 ## WavePattern
-A `WavePattern` is the chaining of e.g. in case for an Impulse 5 `MonoWaves` (alternating between up and down direction).
+A `WavePattern` is the chaining of e.g. in case for an Impulse 5 `MonoWaves` (alternating between up and down direction). It is initialized with a list of `MonoWave`.
+
+## WaveCycle
+A `WaveCycle` is the combination of an impulsive (12345) and a corrective (ABC) movement.
 
 ## WaveAnalyzer
+Is used to find impulsive and corrective movements.
 
 ## WaveOptions
 `WaveOptions` are a set of integers denoting how many of the (local) highs or lows should be
@@ -53,4 +57,7 @@ Own rules can be created via inheritance from the base class. There are rules
 implemented for 12345 Impulse. Leading Triangle and for ABC Correction.
 
 To create an own rule, the `.set_conditions()` method has to be implemented for every inherited rule.
+
+## Helpers
+Contains some plotting functions to plot a `MonoWave` (a single movement), a `WavePattern` (e.g. 12345 or ABC) and a `WaveCycle` (12345-ABC).
 
