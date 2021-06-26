@@ -30,16 +30,38 @@ class WaveAnalyzer:
         self.set_combinatorial_limits()
 
     def get_absolute_low(self):
+        """
+        find the absolute low in the dataframe. Can be used to start the wave analysis from this low.
+        :return:
+        """
         return np.min(self.lows)
 
     def set_combinatorial_limits(self, n_up: int = 10, n_down: int = 10):
+        """
+        Change the limit to skip min / maxima for the WaveOptionsGenerators, e.g. go up to [n_up, n_up, ...] for the
+        WaveOptions
+
+        :param n_up:
+        :param n_down:
+        :return:
+        """
         self.__waveoptions_up = WaveOptionsGenerator5(n_up)
         self.__waveoptions_down = WaveOptionsGenerator3(n_down)
 
     def find_impulsive_wave(self,
                             idx_start: int,
                             wave_config: list = None):
-        # first wave, start at first low in the data
+        """
+        Tries to find 5 consecutive waves (up, down, up, down, up) to build an impulsive 12345 wave
+
+        :param idx_start: index in dataframe to start from
+        :param wave_config: WaveOptions
+        :return: list of the 5 MonoWaves in case they are found.
+
+                False otherwise
+        """
+
+
 
         if wave_config is None:
             wave_config = [0, 0, 0, 0, 0]
@@ -74,8 +96,6 @@ class WaveAnalyzer:
             return False
 
         if wave2.low > np.min(self.lows[wave2.low_idx:wave4.low_idx]):
-            #print(wave2.low ,np.min(self.lows[wave2.low_idx:wave4.low_idx]))
-            #print('Low of Wave 2 lower than a low between Wave 2 and Wave 4')
             return False
 
         wave5 = MonoWaveUp(lows=self.lows, highs=self.highs, dates=self.dates, idx_start=wave4_end, skip=wave_config[4])
@@ -94,6 +114,14 @@ class WaveAnalyzer:
     def find_corrective_wave(self,
                              idx_start: int,
                              wave_config: list = None):
+        """
+
+        Tries to find a corrective movement (ABC)
+        :param idx_start:
+        :param wave_config:
+        :return: a list of 3 MonoWaves (down, up, down) otherwise False
+
+        """
         if wave_config is None:
             wave_config = [0, 0, 0]
 
@@ -176,7 +204,3 @@ class WaveAnalyzer:
                         yield wave_cycle
 
         return None
-
-    def trend(self):
-        start_idx = self.get_absolute_low()
-

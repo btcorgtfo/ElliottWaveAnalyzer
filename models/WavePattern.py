@@ -1,10 +1,11 @@
-import pandas as pd
-import numpy as np
 from models.WaveRules import WaveRule
 from models.MonoWave import MonoWaveUp, MonoWaveDown
 
 
 class WavePattern:
+    """
+    Class to build a wave pattern from consecutive MonoWaves, e.g. 5 for an impulse and 3 for a correction
+    """
     def __init__(self, waves: list, wave_options: list = None, verbose: bool = False):
         self.__waves = waves
         self.__verobse = verbose
@@ -22,7 +23,13 @@ class WavePattern:
         self.waves = __waves_dict
 
     def check_rule(self, waverule: WaveRule) -> bool:
+        """
+        Checks if WaveRule is valid for the WavePattern
 
+        :param waverule:
+        :return: True if all WaveRules are fullfilled, False otherwise
+
+        """
         for rule, conditions in waverule.conditions.items():
 
             no_of_waves = len(conditions.get('waves'))
@@ -104,7 +111,12 @@ class WavePattern:
         return values
 
     @property
-    def labels(self):
+    def labels(self) -> list:
+        """
+        Labels 12345 for impulse and ABC for correction to be placed at the end of the waves in the plots.
+
+        :return:
+        """
         labels = list()
         reference_length = next(iter(self.waves.items()))[1].length
 
