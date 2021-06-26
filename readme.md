@@ -1,5 +1,5 @@
 
-#ElliottWaveAnalyzer
+# ElliottWaveAnalyzer
 First Version of an (not yet) iterative Elliott Wave scanner in financial data.
 
 ## Quickstart
@@ -8,12 +8,12 @@ Have a look into `example_find_impulse.py` to see how the algorithm works for fi
 ## Helper
 Use `get_data.py` script to download data directly from yahoo finance.
 
-#Algorithm / Idea
+# Algorithm / Idea
 The basic idea of the algorithm is to try **a lot** of combinations of possible wave
 patterns for a given OHLC chart and validate each one against a given
 set of rules (e.g. against an 12345 impulsive movement).
 
-#Class Structure
+# Class Structure
 ## MonoWave
 The smallest element in a chart (or a trend) is called a MonoWave: 
 The impulsive movement from a given low (or high) to the next high 
@@ -33,13 +33,13 @@ e.g. `skip=2` will skip the next 2 maxima.
 ## WavePattern
 A `WavePattern` is the chaining of e.g. in case for an Impulse 5 `MonoWaves` (alternating between up and down direction).
 
-##WaveAnalyzer
+## WaveAnalyzer
 
-##WaveOptions
+## WaveOptions
 `WaveOptions` are a set of integers denoting how many of the (local) highs or lows should be
 skipped to form a MonoWave.
 
-###WaveOptionsGenerator
+### WaveOptionsGenerator
 There are three `WaveOptionsGenerators` available at the moment to fit the needs for creating
 tuples of 2, 3 and 5 integers (for a 12 `TDWave`, an ABC `Correction` and a 12345 `Impulse`).
 
