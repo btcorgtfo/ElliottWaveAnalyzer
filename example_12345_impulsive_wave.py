@@ -20,7 +20,7 @@ rules_to_check = [impulse, leading_diagonal]
 print(f'Start at idx: {idx_start}')
 print(f"will run up to {wave_options_impulse.number / 1e6}M combinations.")
 
-# set up a dict to store already found wave counts
+# set up a set to store already found wave counts
 # it can be the case, that 2 WaveOptions lead to the same WavePattern.
 # This can be seen in a chart, where for example we try to skip more maxima as there are. In such a case
 # e.g. [1,2,3,4,5] and [1,2,3,4,10] will lead to the same WavePattern (has same sub-wave structure, same begin / end,
