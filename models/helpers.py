@@ -85,6 +85,7 @@ def plot_pattern(df: pd.DataFrame, wave_pattern: WavePattern, title: str = ''):
 
     fig.show()
 
+
 def plot_monowave(df, monowave, title: str = ''):
     data = go.Ohlc(x=df['Date'],
                    open=df['Open'],
@@ -94,7 +95,6 @@ def plot_monowave(df, monowave, title: str = ''):
 
     monowaves = go.Scatter(x=monowave.dates,
                            y=monowave.points,
-                           text=monowave.labels,
                            mode='lines+markers+text',
                            textposition='middle right',
                            textfont=dict(size=15, color='#2c3035'),

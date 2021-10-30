@@ -1,7 +1,13 @@
 from abc import ABC, abstractmethod
 
-
 class WaveOptions:
+    """
+    WaveOptions are a list of integers denoting the number of intermediate min / maxima should be skipped while
+    finding a MonoWave.
+
+    E.g. [1,0,0,0,0] will skip the first found maxima for the first MonoWaveUp.
+
+    """
     def __init__(self, i: int, j: int = None, k: int = None, l: int = None, m: int = None):
         self.i = i
         self.j = j
@@ -39,6 +45,16 @@ class WaveOptions:
                 return False
 
     def __lt__(self, other):
+        """
+        implementation of a ranking of WaveOptions. [1,0,0,0,0] should be larger than [0,0,0,0,0] and [1,2,0,0,0] should
+        be larger than [1,1,0,0,0] etc.
+
+        As the sets in the Generators are not sorted, the implementation helps to sort the WaveOptions and go from
+        smallest / shortest waves, e.g. [0,0,0,0,0] to larger ones
+
+        :param other:
+        :return:
+        """
         # WaveOption has [i, j, k, l, m]
 
         if self.i < other.i:
@@ -101,6 +117,10 @@ class WaveOptionsGenerator(ABC):
 
 
 class WaveOptionsGenerator5(WaveOptionsGenerator):
+    """
+    WaveOptionsGenerator for impulsive 12345 movements
+
+    """
     def populate(self) -> set:
         checked = set()
 
@@ -124,6 +144,9 @@ class WaveOptionsGenerator5(WaveOptionsGenerator):
 
 
 class WaveOptionsGenerator2(WaveOptionsGenerator):
+    """
+    WaveOptions for 12 Waves
+    """
     def populate(self) -> set:
         checked = list
 
@@ -138,6 +161,9 @@ class WaveOptionsGenerator2(WaveOptionsGenerator):
 
 
 class WaveOptionsGenerator3(WaveOptionsGenerator):
+    """
+    WaveOptions for corrective (ABC) like movements
+    """
     def populate(self) -> set:
         checked = set()
 

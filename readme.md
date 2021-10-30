@@ -1,19 +1,19 @@
 
-#ElliottWaveAnalyzer
+# ElliottWaveAnalyzer
 First Version of an (not yet) iterative Elliott Wave scanner in financial data.
 
 ## Quickstart
-Have a look into `example_find_impulse.py` to see how the algorithm works for finding 12345 impulsive movements.
+Have a look into `example_12345_impulsive_wave.py` to see how the algorithm works for finding 12345 impulsive movements.
 
 ## Helper
 Use `get_data.py` script to download data directly from yahoo finance.
 
-#Algorithm / Idea
+# Algorithm / Idea
 The basic idea of the algorithm is to try **a lot** of combinations of possible wave
 patterns for a given OHLC chart and validate each one against a given
 set of rules (e.g. against an 12345 impulsive movement).
 
-#Class Structure
+# Class Structure
 ## MonoWave
 The smallest element in a chart (or a trend) is called a MonoWave: 
 The impulsive movement from a given low (or high) to the next high 
@@ -25,21 +25,25 @@ The MonoWave ends, once a candle breaks this "micro trend".
 There is `MonoWaveUp` and the `MonoWaveDown`, denoting the direction of the wave.
 
 ### Parameters
-The essential idea is, that with the parameter 'skip=', smaller corrections can be skipped. In case of an upwards trend, 
+The essential idea is, that with the parameter `skip=`, smaller corrections can be skipped. In case of an upwards trend, 
 e.g. `skip=2` will skip the next 2 maxima.
 
 ![](doc/img/monowave_skip.png)
 
 ## WavePattern
-A `WavePattern` is the chaining of e.g. in case for an Impulse 5 `MonoWaves` (alternating between up and down direction).
+A `WavePattern` is the chaining of e.g. in case for an Impulse 5 `MonoWaves` (alternating between up and down direction). It is initialized with a list of `MonoWave`.
 
-##WaveAnalyzer
+## WaveCycle
+A `WaveCycle` is the combination of an impulsive (12345) and a corrective (ABC) movement.
 
-##WaveOptions
+## WaveAnalyzer
+Is used to find impulsive and corrective movements.
+
+## WaveOptions
 `WaveOptions` are a set of integers denoting how many of the (local) highs or lows should be
 skipped to form a MonoWave.
 
-###WaveOptionsGenerator
+### WaveOptionsGenerator
 There are three `WaveOptionsGenerators` available at the moment to fit the needs for creating
 tuples of 2, 3 and 5 integers (for a 12 `TDWave`, an ABC `Correction` and a 12345 `Impulse`).
 
@@ -53,4 +57,7 @@ Own rules can be created via inheritance from the base class. There are rules
 implemented for 12345 Impulse. Leading Triangle and for ABC Correction.
 
 To create an own rule, the `.set_conditions()` method has to be implemented for every inherited rule.
+
+## Helpers
+Contains some plotting functions to plot a `MonoWave` (a single movement), a `WavePattern` (e.g. 12345 or ABC) and a `WaveCycle` (12345-ABC).
 
