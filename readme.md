@@ -3,7 +3,7 @@
 First Version of an (not yet) iterative Elliott Wave scanner in financial data.
 
 ## Quickstart
-Have a look into `example_find_impulse.py` to see how the algorithm works for finding 12345 impulsive movements.
+Have a look into `example_12345_impulsive_wave.py` to see how the algorithm works for finding 12345 impulsive movements.
 
 ## Helper
 Use `get_data.py` script to download data directly from yahoo finance.
