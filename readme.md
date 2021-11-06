@@ -2,8 +2,14 @@
 # ElliottWaveAnalyzer
 First Version of an (not yet) iterative Elliott Wave scanner in financial data.
 
+## Setup
+use Python 3.9 environment and install all packages via
+`pip install -r requirements.txt`
+
 ## Quickstart
-Have a look into `example_12345_impulsive_wave.py` to see how the algorithm works for finding 12345 impulsive movements.
+Start with `example_monowave.py` to see how the basic concept (finding monowaves) works and play with the parameter `skip_n`.
+
+Then have a look into `example_12345_impulsive_wave.py` to see how the algorithm works for finding 12345 impulsive movements.
 
 ## Helper
 Use `get_data.py` script to download data directly from yahoo finance.
@@ -24,6 +30,10 @@ The MonoWave ends, once a candle breaks this "micro trend".
 
 There is `MonoWaveUp` and the `MonoWaveDown`, denoting the direction of the wave.
 
+### WaveOptions
+`WaveOptions` are a set of integers denoting how many of the (local) highs or lows should be
+skipped to form a MonoWave.
+
 ### Parameters
 The essential idea is, that with the parameter `skip=`, smaller corrections can be skipped. In case of an upwards trend, 
 e.g. `skip=2` will skip the next 2 maxima.
@@ -38,10 +48,6 @@ A `WaveCycle` is the combination of an impulsive (12345) and a corrective (ABC) 
 
 ## WaveAnalyzer
 Is used to find impulsive and corrective movements.
-
-## WaveOptions
-`WaveOptions` are a set of integers denoting how many of the (local) highs or lows should be
-skipped to form a MonoWave.
 
 ### WaveOptionsGenerator
 There are three `WaveOptionsGenerators` available at the moment to fit the needs for creating

@@ -29,7 +29,8 @@ print(f"will run up to {wave_options_impulse.number / 1e6}M combinations.")
 
 wavepatterns_up = set()
 
-# loop over all combinations of wave options [i,j,k,l,m] for impulsive waves
+# loop over all combinations of wave options [i,j,k,l,m] for impulsive waves sorted from small, e.g.  [0,1,...] to
+# large e.g. [3,2, ...]
 for new_option_impulse in wave_options_impulse.options_sorted:
 
     waves_up = wa.find_impulsive_wave(idx_start=idx_start, wave_config=new_option_impulse.values)
