@@ -67,9 +67,11 @@ Once you have a `WavePattern` (chaining of 5 `MonoWave` for an impulse or 3 `Mon
 
 ## WaveCycle
 A `WaveCycle` is the combination of an impulsive (12345) and a corrective (ABC) movement.
+Not working atm.
 
 ## WaveAnalyzer
 Is used to find impulsive and corrective movements.
+Not working atm.
 
 ### WaveOptionsGenerator
 There are three `WaveOptionsGenerators` available at the moment to fit the needs for creating
@@ -83,3 +85,5 @@ first, the shortest (time wise) movements will be found.
 ## Helpers
 Contains some plotting functions to plot a `MonoWave` (a single movement), a `WavePattern` (e.g. 12345 or ABC) and a `WaveCycle` (12345-ABC).
 
+# Plotting
+For different models there are plotting functions. E.g. use `plot_monowave` to plot a `MonoWave` instance or `plot_pattern` for a `WavePattern`.

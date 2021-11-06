@@ -60,6 +60,7 @@ def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
     df_output['Low'] = df['Low'].to_list()
     df_output['Close'] = df['Close'].to_list()
 
+
     return df_output
 
 def plot_pattern(df: pd.DataFrame, wave_pattern: WavePattern, title: str = ''):
