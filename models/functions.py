@@ -1,6 +1,7 @@
 from numba import njit
 import numpy as np
 
+
 @njit
 def hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0):
     """
@@ -23,8 +24,11 @@ def hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0):
 
     return high, high_idx
 
+
 @njit
-def next_hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0, prev_high: float = 0):
+def next_hi(
+    lows_arr: np.array, highs_arr: np.array, idx_start: int = 0, prev_high: float = 0
+):
     """
     Given idx_start (and a previous high), this returns the next high, high_idx
 
@@ -38,7 +42,6 @@ def next_hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0, prev_hi
 
     prev_high_reached = False
     for idx in range(idx_start + 1, len(highs_arr)):
-
         act_high = highs_arr[idx]
 
         if act_high < prev_high and not prev_high_reached:
@@ -58,13 +61,13 @@ def next_hi(lows_arr: np.array, highs_arr: np.array, idx_start: int = 0, prev_hi
 
     return None, None
 
+
 @njit
 def next_lo(lows_arr: np.array, highs_arr: np.array, idx_start: int, prev_low: float):
     low = highs_arr[idx_start]
     prev_low_reached = False
 
     for idx in range(idx_start + 1, len(lows_arr)):
-
         act_low = lows_arr[idx]
 
         if act_low > prev_low and not prev_low_reached:
@@ -83,6 +86,7 @@ def next_lo(lows_arr: np.array, highs_arr: np.array, idx_start: int, prev_low: f
             return low, low_idx
 
     return None, None
+
 
 @njit
 def lo(lows_arr: np.array, highs_arr: np.array, idx_start):

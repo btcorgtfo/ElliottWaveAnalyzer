@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class WaveOptions:
     """
     WaveOptions are a list of integers denoting the number of intermediate min / maxima should be skipped while
@@ -8,7 +9,10 @@ class WaveOptions:
     E.g. [1,0,0,0,0] will skip the first found maxima for the first MonoWaveUp.
 
     """
-    def __init__(self, i: int, j: int = None, k: int = None, l: int = None, m: int = None):
+
+    def __init__(
+        self, i: int, j: int = None, k: int = None, l: int = None, m: int = None
+    ):
         self.i = i
         self.j = j
         self.k = k
@@ -16,7 +20,7 @@ class WaveOptions:
         self.m = m
 
     def __repr__(self):
-        return f'[{self.i}, {self.j}, {self.k}, {self.l}, {self.m}]'
+        return f"[{self.i}, {self.j}, {self.k}, {self.l}, {self.m}]"
 
     @property
     def values(self):
@@ -27,14 +31,20 @@ class WaveOptions:
 
     def __hash__(self):
         if self.k is not None:
-            hash_str = f'{self.i}_{self.j}_{self.k}_{self.l}_{self.m}'
+            hash_str = f"{self.i}_{self.j}_{self.k}_{self.l}_{self.m}"
         else:
-            hash_str = f'{self.i}_{self.j}'
+            hash_str = f"{self.i}_{self.j}"
         return hash(hash_str)
 
     def __eq__(self, other):
         if self.k is not None:
-            if self.i == other.i and self.j == other.j and self.k == other.k and self.l == other.l and self.m == other.m:
+            if (
+                self.i == other.i
+                and self.j == other.j
+                and self.k == other.k
+                and self.l == other.l
+                and self.m == other.m
+            ):
                 return True
             else:
                 return False
@@ -61,12 +71,10 @@ class WaveOptions:
             return True
 
         elif self.i == other.i:
-
             if self.j < other.j:
                 return True
 
             elif self.j == other.j:
-
                 if self.k == other.k:
                     if self.l < other.l:
                         return True
@@ -121,6 +129,7 @@ class WaveOptionsGenerator5(WaveOptionsGenerator):
     WaveOptionsGenerator for impulsive 12345 movements
 
     """
+
     def populate(self) -> set:
         checked = set()
 
@@ -129,7 +138,6 @@ class WaveOptionsGenerator5(WaveOptionsGenerator):
                 for k in range(0, self.up_to):
                     for l in range(0, self.up_to):
                         for m in range(0, self.up_to):
-
                             if i == 0:
                                 j = k = l = m = 0
                             if j == 0:
@@ -147,6 +155,7 @@ class WaveOptionsGenerator2(WaveOptionsGenerator):
     """
     WaveOptions for 12 Waves
     """
+
     def populate(self) -> set:
         checked = list
 
@@ -164,6 +173,7 @@ class WaveOptionsGenerator3(WaveOptionsGenerator):
     """
     WaveOptions for corrective (ABC) like movements
     """
+
     def populate(self) -> set:
         checked = set()
 

@@ -7,17 +7,19 @@ from models.helpers import plot_pattern
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv(r'data\btc-usd_1d.csv')
-idx_start = np.argmin(np.array(list(df['Low'])))
+df = pd.read_csv(r"data\btc-usd_1d.csv")
+idx_start = np.argmin(np.array(list(df["Low"])))
 
 wa = WaveAnalyzer(df=df, verbose=False)
-wave_options_impulse = WaveOptionsGenerator5(up_to=15)  # generates WaveOptions up to [15, 15, 15, 15, 15]
+wave_options_impulse = WaveOptionsGenerator5(
+    up_to=15
+)  # generates WaveOptions up to [15, 15, 15, 15, 15]
 
-impulse = Impulse('impulse')
-leading_diagonal = LeadingDiagonal('leading diagonal')
+impulse = Impulse("impulse")
+leading_diagonal = LeadingDiagonal("leading diagonal")
 rules_to_check = [impulse, leading_diagonal]
 
-print(f'Start at idx: {idx_start}')
+print(f"Start at idx: {idx_start}")
 print(f"will run up to {wave_options_impulse.number / 1e6}M combinations.")
 
 # set up a set to store already found wave counts
@@ -32,18 +34,22 @@ wavepatterns_up = set()
 # loop over all combinations of wave options [i,j,k,l,m] for impulsive waves sorted from small, e.g.  [0,1,...] to
 # large e.g. [3,2, ...]
 for new_option_impulse in wave_options_impulse.options_sorted:
-
-    waves_up = wa.find_impulsive_wave(idx_start=idx_start, wave_config=new_option_impulse.values)
+    waves_up = wa.find_impulsive_wave(
+        idx_start=idx_start, wave_config=new_option_impulse.values
+    )
 
     if waves_up:
         wavepattern_up = WavePattern(waves_up, verbose=True)
 
         for rule in rules_to_check:
-
             if wavepattern_up.check_rule(rule):
                 if wavepattern_up in wavepatterns_up:
                     continue
                 else:
                     wavepatterns_up.add(wavepattern_up)
-                    print(f'{rule.name} found: {new_option_impulse.values}')
-                    plot_pattern(df=df, wave_pattern=wavepattern_up, title=str(new_option_impulse))
+                    print(f"{rule.name} found: {new_option_impulse.values}")
+                    plot_pattern(
+                        df=df,
+                        wave_pattern=wavepattern_up,
+                        title=str(new_option_impulse),
+                    )

@@ -1,9 +1,11 @@
 from models.WavePattern import WavePattern
 
+
 class WaveCycle:
     """
     One Cycle of 12345 -> ABC
     """
+
     def __init__(self, wavepattern_up: WavePattern, wavepattern_down: WavePattern):
         self.wp_up = wavepattern_up
         self.wp_down = wavepattern_down
@@ -58,11 +60,14 @@ class WaveCycle:
     #     return cls(wave_pattern_up, wave_pattern_down)
 
     def __eq__(self, other):
-        if self.wp_down.values == other.wp_down.values and self.wp_up.values == other.wp_up.values:
+        if (
+            self.wp_down.values == other.wp_down.values
+            and self.wp_up.values == other.wp_up.values
+        ):
             return True
         else:
             return False
 
     def __hash__(self):
-        str_to_hash = f'{self.wp_up.values}_{self.wp_down.values}'
+        str_to_hash = f"{self.wp_up.values}_{self.wp_down.values}"
         return hash(str_to_hash)

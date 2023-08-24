@@ -3,8 +3,13 @@
 First Version of an (not yet) iterative Elliott Wave scanner in financial data.
 
 ## Setup
-use Python 3.9 environment and install all packages via
+use Python 3.11 environment and install all packages via
 `pip install -r requirements.txt`
+
+# Algorithm / Idea
+The basic idea of the algorithm is to try **a lot** of combinations of possible wave
+patterns for a given OHLC chart and validate each one against a given
+set of rules (e.g. against an 12345 impulsive movement).
 
 ## Quickstart
 Start with `example_monowave.py` to see how the basic concept (finding monowaves) works and play with the parameter `skip_n`.
@@ -13,11 +18,6 @@ Then have a look into `example_12345_impulsive_wave.py` to see how the algorithm
 
 ## Helper
 Use `get_data.py` script to download data directly from yahoo finance.
-
-# Algorithm / Idea
-The basic idea of the algorithm is to try **a lot** of combinations of possible wave
-patterns for a given OHLC chart and validate each one against a given
-set of rules (e.g. against an 12345 impulsive movement).
 
 # Class Structure
 ## MonoWave

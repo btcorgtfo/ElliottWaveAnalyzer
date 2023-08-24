@@ -20,5 +20,3 @@ class Trend:
 
     def __hash__(self):
         pass
-
-

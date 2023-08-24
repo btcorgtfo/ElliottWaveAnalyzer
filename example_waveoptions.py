@@ -6,4 +6,3 @@ print(wo.options_sorted)
 
 wo = WaveOptionsGenerator3(10)
 print(wo.options_sorted)
-

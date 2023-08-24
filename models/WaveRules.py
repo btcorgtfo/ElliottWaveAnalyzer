@@ -6,6 +6,7 @@ class WaveRule(ABC):
     """
     base class for implementing wave rules
     """
+
     def __init__(self, name: str):
         self.name = name
         self.conditions = self.set_conditions()
