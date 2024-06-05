@@ -16,3 +16,4 @@ tenacity==8.3.0
 urllib3==2.2.1
 wincertstore==0.2
 yfinance==0.2.40
+kaleido==0.1.0
