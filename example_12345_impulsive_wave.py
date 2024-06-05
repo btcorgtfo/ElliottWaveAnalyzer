@@ -6,11 +6,17 @@ from models.WaveOptions import WaveOptionsGenerator5
 from models.helpers import plot_pattern
 import pandas as pd
 import numpy as np
+import yfinance as yf
+from pprint import pprint
+
+# end_date = pd.Timestamp.now()
+# start_date = end_date - pd.DateOffset(days=360)
+# df = yf.download('MSFT', start=start_date, end=end_date)
 
 df = pd.read_csv(r'data\btc-usd_1d.csv')
 idx_start = np.argmin(np.array(list(df['Low'])))
 
-wa = WaveAnalyzer(df=df, verbose=False)
+wa = WaveAnalyzer(df=df, verbose=False) # .reset_index()
 wave_options_impulse = WaveOptionsGenerator5(up_to=15)  # generates WaveOptions up to [15, 15, 15, 15, 15]
 
 impulse = Impulse('impulse')

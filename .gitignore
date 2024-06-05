@@ -1,1 +1,4 @@
 .idea
+venv
+images
+__pycache__

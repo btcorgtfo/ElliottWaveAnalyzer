@@ -2,6 +2,9 @@ from models.WavePattern import WavePattern
 import pandas as pd
 import time
 import plotly.graph_objects as go
+import os
+import random
+import string
 
 
 def timeit(func):
@@ -37,7 +40,8 @@ def plot_cycle(df, wave_cycle, title: str = ''):
     fig = go.Figure(data=[data, monowaves], layout=layout)
     fig.update(layout_xaxis_rangeslider_visible=False)
 
-    fig.show()
+    save_chart_as_image(fig)
+    #fig.show()
 
 
 def convert_yf_data(df: pd.DataFrame) -> pd.DataFrame:
@@ -84,7 +88,8 @@ def plot_pattern(df: pd.DataFrame, wave_pattern: WavePattern, title: str = ''):
     fig = go.Figure(data=[data, monowaves], layout=layout)
     fig.update(layout_xaxis_rangeslider_visible=False)
 
-    fig.show()
+    save_chart_as_image(fig)
+    #fig.show()
 
 
 def plot_monowave(df, monowave, title: str = ''):
@@ -107,4 +112,20 @@ def plot_monowave(df, monowave, title: str = ''):
     fig = go.Figure(data=[data, monowaves], layout=layout)
     fig.update(layout_xaxis_rangeslider_visible=False)
 
-    fig.show()
+    save_chart_as_image(fig)
+    # fig.show()
+
+def save_chart_as_image(fig):
+    if not os.path.exists("images"):
+        os.mkdir("images")
+    current_timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"./images/{current_timestamp}_{generate_random_string(6)}.png"
+    fig.write_image(filename)
+
+
+def generate_random_string(length) -> str:
+    # Define the character set (lowercase, uppercase, digits, and punctuation)
+    characters = string.digits
+    # Generate a random string
+    random_string = ''.join(random.choice(characters) for _ in range(length))
+    return random_string
